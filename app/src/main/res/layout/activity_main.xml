@@ -1,0 +1,223 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:gauge="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@drawable/background">
+
+    <view
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        class="code.martin.it.cardashviewlib.GaugeView"
+        android:id="@+id/torqueGauge"
+        gauge:gaugeDivisions="13"
+        gauge:gaugeInnerRimWidth="0.02"
+        gauge:gaugeOuterBorderWidth="0.01"
+        gauge:gaugeOuterRimWidth="0.02"
+        gauge:gaugeRangeColors="@array/rangeColors"
+        gauge:gaugeRangeValues="@array/torqueRanges"
+        gauge:gaugeScaleEndValue="350"
+        gauge:gaugeScaleStartValue="0"
+        gauge:gaugeShowNeedle="true"
+        gauge:gaugeSubdivisions="2"
+        gauge:gaugeShowTheText="true"
+        gauge:gaugeTextUnit="[Nm]"
+        gauge:gaugeTextUnitSize="0.04"
+        gauge:gaugeTextValue="torque"
+        gauge:gaugeTextValueSize="0.04"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <view
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        class="code.martin.it.cardashviewlib.GaugeView"
+        android:id="@+id/rpmGauge"
+        android:layout_below="@+id/torqueGauge"
+        android:layout_toRightOf="@+id/halView"
+        android:layout_toEndOf="@+id/halView"
+        gauge:gaugeDivisions="7"
+        gauge:gaugeInnerRimWidth="0.02"
+        gauge:gaugeOuterBorderWidth="0.01"
+        gauge:gaugeOuterRimWidth="0.02"
+        gauge:gaugeRangeColors="@array/rangeColors"
+        gauge:gaugeRangeValues="@array/rpmRanges"
+        gauge:gaugeScaleEndValue="6"
+        gauge:gaugeScaleStartValue="0"
+        gauge:gaugeShowNeedle="true"
+        gauge:gaugeSubdivisions="4"
+        gauge:gaugeShowTheText="true"
+        gauge:gaugeTextUnit="[x1000]"
+        gauge:gaugeTextUnitSize="0.04"
+        gauge:gaugeTextValue="rpm"
+        gauge:gaugeTextValueSize="0.04"/>
+
+    <SeekBar
+        android:layout_width="500dp"
+        android:layout_height="30dp"
+        android:id="@+id/torqueSeekBar"
+        android:max="350"
+        android:progress="0"
+        android:layout_alignTop="@+id/torqueTxv"
+        android:layout_alignLeft="@+id/throttleSeekBar"
+        android:layout_alignStart="@+id/throttleSeekBar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Unleash the torque!"
+        android:id="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/torqueTxv"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_marginLeft="53dp"
+        android:layout_marginStart="53dp" />
+
+    <view
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        class="code.martin.it.cardashviewlib.GmeterView"
+        android:id="@+id/gMeterView"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/torqueGauge"
+        android:layout_toStartOf="@+id/torqueGauge"
+        gauge:gMeterCentralIconRes="@drawable/bmw_logo"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start gMeter!"
+        android:id="@+id/startGmeterBtn"
+        android:layout_alignTop="@+id/gMeterView" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start HAL talking"
+        android:id="@+id/startHalBtn"
+        android:layout_alignBottom="@+id/startGmeterBtn"
+        android:layout_toRightOf="@+id/startGmeterBtn"
+        android:layout_toEndOf="@+id/startGmeterBtn" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop GMETER!"
+        android:id="@+id/stopGmeterBtn"
+        android:layout_below="@+id/startGmeterBtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop hal talking"
+        android:id="@+id/stopHalBtn"
+        android:layout_below="@+id/startGmeterBtn"
+        android:layout_toRightOf="@+id/startGmeterBtn"
+        android:layout_toEndOf="@+id/startGmeterBtn" />
+
+    <view
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        class="code.martin.it.cardashviewlib.HalView"
+        android:id="@+id/halView"
+        android:layout_below="@+id/gMeterView"
+        android:layout_alignLeft="@+id/gMeterView"
+        android:layout_alignStart="@+id/gMeterView" />
+
+    <SeekBar
+        android:layout_width="500dp"
+        android:layout_height="30dp"
+        android:id="@+id/throttleSeekBar"
+        android:layout_alignBottom="@+id/throttleTxv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:max="100"
+        android:progress="0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Open throttle!"
+        android:id="@+id/textView3"
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/throttleTxv"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/torqueTxv"
+        android:layout_alignStart="@+id/torqueTxv" />
+
+    <view
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        class="code.martin.it.cardashviewlib.ThrottleView"
+        gauge:throttlePeak="100"
+        gauge:throttleShaderColors="@array/shaderColors"
+        gauge:throttleShaderGradient="@array/shaderGradients"
+        android:id="@+id/throttleView"
+        android:layout_alignBottom="@+id/halView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <view
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        class="code.martin.it.cardashviewlib.GearWheelView"
+        android:id="@+id/gearWheelView"
+        gauge:gearWheelRangeRes="@array/gearWheelitems"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_below="@+id/gMeterView"
+        android:layout_toRightOf="@+id/downBtn"
+        android:layout_toEndOf="@+id/downBtn" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/upBtn"
+        android:layout_below="@+id/stopHalBtn"
+        android:layout_alignRight="@+id/throttleView"
+        android:layout_alignEnd="@+id/throttleView" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:id="@+id/downBtn"
+        android:layout_below="@+id/upBtn"
+        android:layout_alignLeft="@+id/upBtn"
+        android:layout_alignStart="@+id/upBtn" />
+
+</RelativeLayout>

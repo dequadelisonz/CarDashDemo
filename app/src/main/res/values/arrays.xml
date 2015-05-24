@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="torqueRanges">
+        <item>300</item>
+        <item>350</item>
+    </string-array>
+
+    <string-array name="rpmRanges">
+        <item>4</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="rangeColors">
+        <item>#FFFFFF</item>
+        <item>#FF0000</item>
+    </string-array>
+
+    <string-array name="shaderColors">
+        <item>#00FFFFFF</item>
+        <item>#78ff8900</item>
+        <item>#FF8900</item>
+        <item>#FF2800</item>
+    </string-array>
+
+    <string-array name="shaderGradients">
+        <item>0</item>
+        <item>0.3</item>
+        <item>0.7</item>
+        <item>0.99</item>
+    </string-array>
+
+    <string-array name="gearWheelitems">
+        <item>P</item>
+        <item>R</item>
+        <item>N</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+</resources>

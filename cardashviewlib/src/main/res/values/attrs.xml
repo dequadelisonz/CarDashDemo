@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CardashViewLib">
+        <attr name="halViewAmp" format="float" />
+        <attr name="gMeterGx" format="float"/>
+        <attr name="gMeterGy" format="float"/>
+        <attr name="gMeterCentralIconRes" format="reference"/>
+        <attr name="throttlePeak" format="float" />
+        <attr name="throttleShaderColors" format="reference"/>
+        <attr name="throttleShaderGradient" format="reference"/>
+        <attr name="gearWheelRangeRes" format="reference"/>
+        <attr name="gaugeShowOuterShadow" format="boolean" />
+        <attr name="gaugeShowOuterBorder" format="boolean" />
+        <attr name="gaugeShowOuterRim" format="boolean" />
+        <attr name="gaugeShowInnerRim" format="boolean" />
+        <attr name="gaugeShowNeedle" format="boolean" />
+        <attr name="gaugeShowScale" format="boolean" />
+        <attr name="gaugeShowRanges" format="boolean" />
+        <attr name="gaugeShowTheText" format="boolean" />
+        <attr name="gaugeOuterShadowWidth" format="float" />
+        <attr name="gaugeOuterBorderWidth" format="float" />
+        <attr name="gaugeOuterRimWidth" format="float" />
+        <attr name="gaugeInnerRimWidth" format="float" />
+        <attr name="gaugeInnerRimBorderWidth" format="float" />
+        <attr name="gaugeNeedleWidth" format="float" />
+        <attr name="gaugeNeedleHeight" format="float" />
+        <attr name="gaugeScalePosition" format="float" />
+        <attr name="gaugeScaleStartValue" format="float" />
+        <attr name="gaugeScaleEndValue" format="float" />
+        <attr name="gaugeScaleStartAngle" format="float" />
+        <attr name="gaugeDivisions" format="integer" />
+        <attr name="gaugeSubdivisions" format="integer" />
+        <attr name="gaugeRangeValues" format="reference" />
+        <attr name="gaugeRangeColors" format="reference" />
+        <attr name="gaugeTextValue" format="string|reference" />
+        <attr name="gaugeTextValueColor" format="color" />
+        <attr name="gaugeTextValueSize" format="float" />
+        <attr name="gaugeTextUnit" format="string|reference" />
+        <attr name="gaugeTextUnitColor" format="color" />
+        <attr name="gaugeTextUnitSize" format="float" />
+        <attr name="gaugeTextShadowColor" format="color" />
+    </declare-styleable>
+</resources>
