@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'cardashviewlib'
+
+    publishedGroupId = 'code.martin.it'
+    libraryName = 'CarDashViewLib'
+    artifact = 'cardashviewlib'
+
+    libraryDescription = 'CardashViewLib is a library containing views which are designed thinking of automotive applications'
+
+    siteUrl = 'https://github.com/dequadelisonz/CarDashDemo'
+    gitUrl = 'https://github.com/dequadelisonz/CarDashDemo.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'martin'
+    developerName = 'Paolo Martinello'
+    developerEmail = 'paolomartinello76@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -23,3 +47,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile project(':wheelview')
 }
+
+apply from: 'https://raw.githubusercontent.com/dequadelisonz/JCenterPublishing/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/dequadelisonz/JCenterPublishing/master/bintrayv1.gradle'
