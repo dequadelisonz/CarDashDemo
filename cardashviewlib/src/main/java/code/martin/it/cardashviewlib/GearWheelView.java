@@ -23,8 +23,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import code.martin.it.wheelview.WheelView;
-import code.martin.it.wheelview.adapters.ArrayWheelAdapter;
+import code.martin.it.cardashviewlib.adapters.ArrayWheelAdapter;
+import code.martin.it.cardashviewlib.wheelview.WheelView;
 
 public class GearWheelView   extends WheelView {
 

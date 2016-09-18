@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/CarDashDemo.iml" filepath="$PROJECT_DIR$/CarDashDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cardashviewlib/cardashviewlib.iml" filepath="$PROJECT_DIR$/cardashviewlib/cardashviewlib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wheelview/wheelview.iml" filepath="$PROJECT_DIR$/wheelview/wheelview.iml" />
     </modules>
   </component>
 </project>

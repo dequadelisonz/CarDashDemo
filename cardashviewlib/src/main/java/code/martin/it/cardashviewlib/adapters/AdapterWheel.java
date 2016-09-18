@@ -18,45 +18,50 @@
  *  _____________________________________________________________________
  *  included in package code.martin.it.cardashviewlib - Paolo Martinello 2015
  */
-package code.martin.it.wheelview.adapters;
+package code.martin.it.cardashviewlib.adapters;
+
 
 import android.content.Context;
 
-/**
- * The simple Array wheel adapter
- * @param <T> the element type
- */
-public class ArrayWheelAdapter<T> extends AbstractWheelTextAdapter {
+import code.martin.it.cardashviewlib.wheelview.WheelAdapter;
 
-    // items
-    private T items[];
+/**
+ * Adapter class for old wheel adapter (deprecated WheelAdapter class).
+ *
+ * @deprecated Will be removed soon
+ */
+public class AdapterWheel extends AbstractWheelTextAdapter {
+
+    // Source adapter
+    private WheelAdapter adapter;
 
     /**
      * Constructor
      * @param context the current context
-     * @param items the items
+     * @param adapter the source adapter
      */
-    public ArrayWheelAdapter(Context context, T items[]) {
+    public AdapterWheel(Context context, WheelAdapter adapter) {
         super(context);
 
-        //setEmptyItemResource(TEXT_VIEW_ITEM_RESOURCE);
-        this.items = items;
+        this.adapter = adapter;
     }
 
-    @Override
-    public CharSequence getItemText(int index) {
-        if (index >= 0 && index < items.length) {
-            T item = items[index];
-            if (item instanceof CharSequence) {
-                return (CharSequence) item;
-            }
-            return item.toString();
-        }
-        return null;
+    /**
+     * Gets original adapter
+     * @return the original adapter
+     */
+    public WheelAdapter getAdapter() {
+        return adapter;
     }
 
     @Override
     public int getItemsCount() {
-        return items.length;
+        return adapter.getItemsCount();
     }
+
+    @Override
+    protected CharSequence getItemText(int index) {
+        return adapter.getItem(index);
+    }
+
 }

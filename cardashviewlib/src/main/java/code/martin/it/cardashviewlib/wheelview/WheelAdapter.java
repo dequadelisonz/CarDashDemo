@@ -18,19 +18,33 @@
  *  _____________________________________________________________________
  *  included in package code.martin.it.cardashviewlib - Paolo Martinello 2015
  */
-package code.martin.it.wheelview;
+package code.martin.it.cardashviewlib.wheelview;
 
 /**
- * Wheel clicked listener interface.
- * <p>The onItemClicked() method is called whenever a wheel item is clicked
- * <li> New Wheel position is set
- * <li> Wheel view is scrolled
+ * Wheel adapter interface
+ *
+ * @deprecated Use WheelViewAdapter
  */
-public interface OnWheelClickedListener {
+public interface WheelAdapter {
     /**
-     * Callback method to be invoked when current item clicked
-     * @param wheel the wheel view
-     * @param itemIndex the index of clicked item
+     * Gets items count
+     * @return the count of wheel items
      */
-    void onItemClicked(WheelView wheel, int itemIndex);
+    int getItemsCount();
+
+    /**
+     * Gets a wheel item by index.
+     *
+     * @param index the item index
+     * @return the wheel item text or null
+     */
+    String getItem(int index);
+
+    /**
+     * Gets maximum item length. It is used to determine the wheel width.
+     * If -1 is returned there will be used the default wheel width.
+     *
+     * @return the maximum item length or -1
+     */
+    int getMaximumLength();
 }

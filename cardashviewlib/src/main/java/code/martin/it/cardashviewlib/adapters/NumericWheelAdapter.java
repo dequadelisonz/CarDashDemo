@@ -18,7 +18,7 @@
  *  _____________________________________________________________________
  *  included in package code.martin.it.cardashviewlib - Paolo Martinello 2015
  */
-package code.martin.it.wheelview.adapters;
+package code.martin.it.cardashviewlib.adapters;
 
 import android.content.Context;
 

@@ -18,7 +18,7 @@
  *  _____________________________________________________________________
  *  included in package code.martin.it.cardashviewlib - Paolo Martinello 2015
  */
-package code.martin.it.wheelview.adapters;
+package code.martin.it.cardashviewlib.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -33,34 +33,28 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
 
     /** Text view resource. Used as a default view for adapter. */
     public static final int TEXT_VIEW_ITEM_RESOURCE = -1;
-
-    /** No resource constant. */
-    protected static final int NO_RESOURCE = 0;
-
     /** Default text color */
     public static final int DEFAULT_TEXT_COLOR = 0xFF101010;
-
     /** Default text color */
     public static final int LABEL_COLOR = 0xFF700070;
-
     /** Default text size */
     public static final int DEFAULT_TEXT_SIZE = 24;
-
-    // Text settings
-    private int textColor = DEFAULT_TEXT_COLOR;
-    private int textSize = DEFAULT_TEXT_SIZE;
-
+    /**
+     * No resource constant.
+     */
+    protected static final int NO_RESOURCE = 0;
     // Current context
     protected Context context;
     // Layout inflater
     protected LayoutInflater inflater;
-
     // Items resources
     protected int itemResourceId;
     protected int itemTextResourceId;
-
     // Empty items resources
     protected int emptyItemResourceId;
+    // Text settings
+    private int textColor = DEFAULT_TEXT_COLOR;
+    private int textSize = DEFAULT_TEXT_SIZE;
 
     /**
      * Constructor

@@ -18,7 +18,7 @@
  *  _____________________________________________________________________
  *  included in package code.martin.it.cardashviewlib - Paolo Martinello 2015
  */
-package code.martin.it.wheelview;
+package code.martin.it.cardashviewlib.wheelview;
 
 /**
  * Range for visible items.
