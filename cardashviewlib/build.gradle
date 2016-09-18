@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/dequadelisonz/CarDashDemo'
     gitUrl = 'https://github.com/dequadelisonz/CarDashDemo.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'martin'
     developerName = 'Paolo Martinello'

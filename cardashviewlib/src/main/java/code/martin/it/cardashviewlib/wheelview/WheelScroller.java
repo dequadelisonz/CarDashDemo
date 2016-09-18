@@ -145,7 +145,7 @@ public class WheelScroller {
     /**
      * Handles Touch event
      * @param event the motion event
-     * @return
+     * @return void
      */
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {

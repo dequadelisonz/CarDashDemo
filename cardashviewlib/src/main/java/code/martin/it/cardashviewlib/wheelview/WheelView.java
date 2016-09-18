@@ -137,6 +137,9 @@ public class WheelView  extends View {
 
     /**
      * Constructor
+     * @param context the context
+     * @param attrs the attrs
+     * @param defStyle the defStyle
      */
     public WheelView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -145,6 +148,8 @@ public class WheelView  extends View {
 
     /**
      * Constructor
+     * @param  context the context
+     * @param attrs the attrs
      */
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -153,6 +158,7 @@ public class WheelView  extends View {
 
     /**
      * Constructor
+     * @param context the context
      */
     public WheelView(Context context) {
         super(context);
@@ -301,6 +307,7 @@ public class WheelView  extends View {
 
     /**
      * Notifies listeners about clicking
+     * @param item the item
      */
     protected void notifyClickListenersAboutClick(int item) {
         for (OnWheelClickedListener listener : clickingListeners) {
