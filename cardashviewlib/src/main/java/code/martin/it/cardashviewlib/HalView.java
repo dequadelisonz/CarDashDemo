@@ -43,18 +43,20 @@ import java.util.TimerTask;
 public class HalView  extends View {
 
     private final String TAG=this.getClass().getSimpleName();
-
+    private final Property<HalView, Float> propAmp = Property.of(HalView.class, Float.class, "amp");
     private Bitmap rimBitmap,reflBitmap;
     private RectF rimRectF,coreRectf;
     private Paint corePaint,reflPaint,mBackgroundPaint;
     private Float mAmp=5.0f;
     private ObjectAnimator oAnimator;
     private boolean mTalking=false;
-    private final Property<HalView, Float> propAmp=Property.of(HalView.class, Float.class, "amp");
-
     private Timer talkTimer ;
     private Handler timerHandler=new Handler();
 
+    public HalView(Context context) {
+        super(context);
+        initGraphics();
+    }
 
     public HalView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -65,10 +67,6 @@ public class HalView  extends View {
 
 
 
-    public HalView(Context context) {
-        super(context);
-        initGraphics();
-    }
 
     public HalView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -111,7 +109,7 @@ public class HalView  extends View {
         setBackgroundResource(R.drawable.rim);
 
         oAnimator=ObjectAnimator.ofFloat(this, propAmp,10f);
-        //oAnimator.setDuration(180);
+
         oAnimator.setInterpolator(new DecelerateInterpolator());
 
     }
@@ -135,14 +133,14 @@ public class HalView  extends View {
         canvas.translate((scale == getHeight()) ? ((getWidth() - scale) / 2) / scale : 0
                 , (scale == getWidth()) ? ((getHeight() - scale) / 2) / scale : 0);
         rimRectF=new RectF(0f,0f,getWidth(),getHeight());
+        if (rimBitmap != null) {
+            canvas.drawBitmap(rimBitmap, 0, 0, mBackgroundPaint);
+        }
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (rimBitmap!=null) {
-            canvas.drawBitmap(rimBitmap,0,0,mBackgroundPaint);
-        }
 
         int w = getWidth();
         int h = getHeight();
@@ -157,7 +155,16 @@ public class HalView  extends View {
                 corePaint);
         canvas.restore();
         canvas.drawBitmap(reflBitmap, null, rimRectF, reflPaint);
-
+        /*test
+        Paint pp=new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        pp.setColor(Color.WHITE);
+        pp.setStyle(Paint.Style.FILL_AND_STROKE);
+        pp.setStrokeWidth(0.003f);
+        pp.setTextSize(30f);
+        pp.setTypeface(Typeface.SANS_SERIF);
+        pp.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText("provaaaaaaaaa",80f,50f,pp);
+        */
     }
 
 
@@ -263,7 +270,6 @@ public class HalView  extends View {
 
                 @Override
                 public void run() {
-                    // TODO Auto-generated method stub
                     mHalView.setFlashAmp(mAmp, 10f, 300);
                     mHalView.mTalking=false;
                 }

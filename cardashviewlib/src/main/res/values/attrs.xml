@@ -39,5 +39,6 @@
         <attr name="gaugeTextUnitColor" format="color" />
         <attr name="gaugeTextUnitSize" format="float" />
         <attr name="gaugeTextShadowColor" format="color" />
+        <attr name="gauge01pos" format="float"></attr>
     </declare-styleable>
 </resources>

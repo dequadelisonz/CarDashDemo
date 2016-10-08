@@ -184,6 +184,33 @@ public class GaugeView  extends View {
         this(context, null, 0);
     }
 
+    // Workaround to fix missing text on Lollipop and above,
+    // and probably some rendering issues with Jelly Bean and above
+    // Modified from http://stackoverflow.com/a/14989037/746068
+    public static void drawTextOnCanvasWithMagnifier(Canvas canvas, String text, float x, float y, Paint paint) {
+        if (android.os.Build.VERSION.SDK_INT <= 15) {
+            //draw normally
+            canvas.drawText(text, x, y, paint);
+        } else {
+            //workaround
+            float originalStrokeWidth = paint.getStrokeWidth();
+            float originalTextSize = paint.getTextSize();
+            final float magnifier = 1000f;
+
+            canvas.save();
+            canvas.scale(1f / magnifier, 1f / magnifier);
+
+            paint.setTextSize(originalTextSize * magnifier);
+            paint.setStrokeWidth(originalStrokeWidth * magnifier);
+
+            canvas.drawText(text, x * magnifier, y * magnifier, paint);
+            canvas.restore();
+
+            paint.setTextSize(originalTextSize);
+            paint.setStrokeWidth(originalStrokeWidth);
+        }
+    }
+
     private void readAttrs(final Context context, final AttributeSet attrs, final int defStyle) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CardashViewLib, defStyle, 0);
         mShowOuterShadow = a.getBoolean(R.styleable.CardashViewLib_gaugeShowOuterShadow, SHOW_OUTER_SHADOW);
@@ -620,6 +647,16 @@ public class GaugeView  extends View {
         if (mShowRanges) {
             drawScale(canvas);
         }
+
+        Paint pp = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        pp.setColor(Color.WHITE);
+        pp.setStyle(Paint.Style.FILL_AND_STROKE);
+        pp.setStrokeWidth(0.003f);
+        pp.setTextSize(30f);
+        pp.setTypeface(Typeface.SANS_SERIF);
+        pp.setTextAlign(Paint.Align.CENTER);
+        pp.setLinearText(true);
+        canvas.drawText("provaaaaaaaaa", 80f, 50f, pp);
     }
 
     @Override
@@ -696,13 +733,7 @@ public class GaugeView  extends View {
     }
 
     private void drawScale(final Canvas canvas) {
-		/*
-        Paint p=getDefaultTextValuePaint();
-        p.setColor(Color.WHITE);
-        p.setTextSize(0.05f);
-        p.setTextAlign(Align.CENTER);
-        p.setStyle(Style.FILL);
-		 */
+
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
         // On canvas, North is 0 degrees, East is 90 degrees, South is 180 etc.
         // We start the scale somewhere South-West so we need to first rotate the canvas.
@@ -727,7 +758,8 @@ public class GaugeView  extends View {
                 // Draw the text 0.15 away from the division tick
                 canvas.save(Canvas.MATRIX_SAVE_FLAG);
                 canvas.rotate(-1*textAngle, 0.5f, y3+0.040f);
-                canvas.drawText(valueString(value), 0.5f, y3+0.055f,paint);
+                drawTextOnCanvasWithMagnifier(canvas, valueString(value), 0.5f, y3 + 0.055f, paint);
+
                 canvas.restore();
 
             } else {
@@ -738,6 +770,7 @@ public class GaugeView  extends View {
             textAngle+=mSubdivisionAngle;
         }
         canvas.restore();
+
     }
 
     private String valueString(final float value) {
