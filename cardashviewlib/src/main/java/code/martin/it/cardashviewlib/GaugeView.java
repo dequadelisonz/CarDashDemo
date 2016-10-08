@@ -520,7 +520,7 @@ public class GaugeView  extends View {
         for (int i = 0; i < length; i++) {
             mRangePaints[i] = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             mRangePaints[i].setColor(mRangeColors[i]);
-            mRangePaints[i].setStyle(Paint.Style.STROKE);
+            mRangePaints[i].setStyle(Paint.Style.FILL_AND_STROKE);
             mRangePaints[i].setStrokeWidth(0.003f);
             mRangePaints[i].setTextSize(0.05f);
             mRangePaints[i].setTypeface(Typeface.SANS_SERIF);
@@ -718,17 +718,10 @@ public class GaugeView  extends View {
         final float textValueWidth = mTextValuePaint.measureText(textValue);
         final float textUnitWidth = !TextUtils.isEmpty(mTextUnit) ? mTextUnitPaint.measureText(mTextUnit) : 0;
 
-		/*
-		final float startX = CENTER - 0.07f;// (1.0f/textUnitWidth) / 2;
-		final float startY = CENTER + 0.1f;
-
-		canvas.drawText(gaugeTextValue, startX, startY, mTextValuePaint);
-		*/
-        canvas.drawText(textValue, CENTER, CENTER+0.15f, mTextValuePaint);
+        drawTextOnCanvasWithMagnifier(canvas, textValue, CENTER, CENTER + 0.15f, mTextValuePaint);
 
         if (!TextUtils.isEmpty(mTextUnit)) {
-            //canvas.drawText(mTextUnit, CENTER + 0.22f, CENTER, mTextUnitPaint);
-            canvas.drawText(mTextUnit, CENTER , CENTER+0.20f, mTextUnitPaint);
+            drawTextOnCanvasWithMagnifier(canvas, mTextUnit, CENTER, CENTER + 0.20f, mTextUnitPaint);
         }
     }
 
