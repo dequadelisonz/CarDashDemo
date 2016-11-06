@@ -13,6 +13,8 @@
  *******************************************************************************/
 package code.martin.it.cardashviewlib;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -37,7 +39,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Property;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 public class GaugeView  extends View {
 
@@ -89,7 +93,8 @@ public class GaugeView  extends View {
     // *--------------------------------------------------------------------- *//
     // Customizable properties
     // *--------------------------------------------------------------------- *//
-
+    private final Property<GaugeView, Float> propTargetValue =
+            Property.of(GaugeView.class, Float.class, "targetValue");
     private boolean mShowOuterShadow;
     private boolean mShowOuterBorder;
     private boolean mShowOuterRim;
@@ -98,7 +103,6 @@ public class GaugeView  extends View {
     private boolean mShowRanges;
     private boolean mShowNeedle;
     private boolean mShowText;
-
     private float mOuterShadowWidth;
     private float mOuterBorderWidth;
     private float mOuterRimWidth;
@@ -106,17 +110,14 @@ public class GaugeView  extends View {
     private float mInnerRimBorderWidth;
     private float mNeedleWidth;
     private float mNeedleHeight;
-
     private float mScalePosition;
     private float mScaleStartValue;
     private float mScaleEndValue;
     private float mScaleStartAngle;
     private float[] mRangeValues;
-
     private int[] mRangeColors;
     private int mDivisions;
     private int mSubdivisions;
-
     private RectF mOuterShadowRect;
     private RectF mOuterBorderRect;
     private RectF mOuterRimRect;
@@ -124,7 +125,6 @@ public class GaugeView  extends View {
     private RectF mInnerRimBorderRect;
     private RectF mFaceRect;
     private RectF mScaleRect;
-
     private Bitmap mBackground;
     private Paint mBackgroundPaint;
     private Paint mOuterShadowPaint;
@@ -143,7 +143,6 @@ public class GaugeView  extends View {
     private Paint mNeedleScrewBorderPaint;
     private Paint mTextValuePaint;
     private Paint mTextUnitPaint;
-
     private String mTextValue;
     private String mTextUnit;
     private int mTextValueColor;
@@ -151,24 +150,23 @@ public class GaugeView  extends View {
     private int mTextShadowColor;
     private float mTextValueSize;
     private float mTextUnitSize;
-
     private Path mNeedleRightPath;
-    private Path mNeedleLeftPath;
 
     // *--------------------------------------------------------------------- *//
-
+    private Path mNeedleLeftPath;
     private float mScaleRotation;
     private float mDivisionValue;
     private float mSubdivisionValue;
     private float mSubdivisionAngle;
-
-    private float mTargetValue;
-    private float mCurrentValue;
+    private Float targetValue;
+    private Float mCurrentValue;
+    private ObjectAnimator oAnimator;
 
     private float mNeedleVelocity;
     private float mNeedleAcceleration;
     private long mNeedleLastMoved = -1;
     private boolean mNeedleInitialized;
+
 
     public GaugeView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
@@ -303,6 +301,9 @@ public class GaugeView  extends View {
         if (mShowRanges) {
             initScale();
         }
+
+        oAnimator = ObjectAnimator.ofFloat(this, propTargetValue, 0f);
+        oAnimator.setInterpolator(new DecelerateInterpolator());
     }
 
     public void initDrawingRects() {
@@ -567,7 +568,7 @@ public class GaugeView  extends View {
         mNeedleAcceleration = bundle.getFloat("needleAcceleration");
         mNeedleLastMoved = bundle.getLong("needleLastMoved");
         mCurrentValue = bundle.getFloat("currentValue");
-        mTargetValue = bundle.getFloat("targetValue");
+        targetValue = bundle.getFloat("targetValue");
     }
 
     private void initScale() {
@@ -588,7 +589,7 @@ public class GaugeView  extends View {
         state.putFloat("needleAcceleration", mNeedleAcceleration);
         state.putLong("needleLastMoved", mNeedleLastMoved);
         state.putFloat("currentValue", mCurrentValue);
-        state.putFloat("targetValue", mTargetValue);
+        state.putFloat("targetValue", targetValue);
         return state;
     }
 
@@ -786,7 +787,7 @@ public class GaugeView  extends View {
     private void drawNeedle(final Canvas canvas) {
         if (mNeedleInitialized) {
             //final float angle = getAngleForValue(mCurrentValue);
-            final float angle = getAngleForValue(mTargetValue);
+            final float angle = getAngleForValue(targetValue);
             // Logger.log.info(String.format("value=%f -> angle=%f", mCurrentValue, angle));
 
 
@@ -826,7 +827,7 @@ public class GaugeView  extends View {
         // Logger.log.warn(String.format("velocity=%f, acceleration=%f", mNeedleVelocity,
         // mNeedleAcceleration));
 
-        if (!(Math.abs(mCurrentValue - mTargetValue) > 0.01f)) {
+        if (!(Math.abs(mCurrentValue - targetValue) > 0.01f)) {
             return;
         }
 
@@ -834,17 +835,17 @@ public class GaugeView  extends View {
             final float time = (System.currentTimeMillis() - mNeedleLastMoved) / 1000.0f;
             final float direction = Math.signum(mNeedleVelocity);
             if (Math.abs(mNeedleVelocity) < 90.0f) {
-                mNeedleAcceleration = 5.0f * (mTargetValue - mCurrentValue);
+                mNeedleAcceleration = 5.0f * (targetValue - mCurrentValue);
             } else {
                 mNeedleAcceleration = 0.0f;
             }
 
-            mNeedleAcceleration = 5.0f * (mTargetValue - mCurrentValue);
+            mNeedleAcceleration = 5.0f * (targetValue - mCurrentValue);
             mCurrentValue += mNeedleVelocity * time;
             mNeedleVelocity += mNeedleAcceleration * time;
 
-            if ((mTargetValue - mCurrentValue) * direction < 0.01f * direction) {
-                mCurrentValue = mTargetValue;
+            if ((targetValue - mCurrentValue) * direction < 0.01f * direction) {
+                mCurrentValue = targetValue;
                 mNeedleVelocity = 0.0f;
                 mNeedleAcceleration = 0.0f;
                 mNeedleLastMoved = -1L;
@@ -860,25 +861,36 @@ public class GaugeView  extends View {
         }
     }
 
-    public void setTargetValue(final float value) {
+    public Float getTargetValue() {
+        return targetValue;
+    }
+
+    public void setTargetValue(final Float value) {
         if (mShowScale || mShowRanges) {
             if (value < mScaleStartValue) {
-                mTargetValue = mScaleStartValue;
+                targetValue = mScaleStartValue;
             } else if (value > mScaleEndValue) {
-                mTargetValue = mScaleEndValue;
+                targetValue = mScaleEndValue;
             } else {
-                mTargetValue = value;
+                targetValue = value;
             }
         } else {
-            mTargetValue = value;
+            targetValue = value;
         }
-        mCurrentValue=mTargetValue;
+        mCurrentValue = targetValue;
         mNeedleInitialized = true;
         invalidate();
     }
 
+    public void setAnimTarget(float target) {
+        final PropertyValuesHolder pVh = PropertyValuesHolder.ofFloat(propTargetValue, mCurrentValue, target);
+        oAnimator.setValues(pVh);
+        oAnimator.setDuration(100);
+        oAnimator.start();
+    }
 
-    public float getCurrentValue() {
+
+    public Float getCurrentValue() {
         return mCurrentValue;
     }
 
